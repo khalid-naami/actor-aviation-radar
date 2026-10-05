@@ -8,6 +8,7 @@
             "type": "string",
             "description": "Select geographical bounding box for live ADS-B flight transponder scanning.",
             "default": "Western Europe & Mediterranean",
+            "editor": "select",
             "enum": [
                 "North Africa & Morocco",
                 "Western Europe & Mediterranean",
@@ -28,13 +29,15 @@
             "title": "Filter by Specific Callsign / Airline Code",
             "type": "string",
             "description": "Optional search term for specific aircraft callsign (e.g. RAM, UAE, BAW, AFR, DLH).",
-            "default": ""
+            "default": "",
+            "editor": "textfield"
         },
         "airportIcaoForFids": {
             "title": "Airport ICAO for FIDS Timetable",
             "type": "string",
             "description": "Airport code to extract departure/arrival FIDS boards (e.g. GMMN, OMDB, LFPG, EGLL, KJFK).",
-            "default": "GMMN"
+            "default": "GMMN",
+            "editor": "textfield"
         },
         "includeConflictZones": {
             "title": "Include Conflict Airspace CZIB Bulletins",
