@@ -1,0 +1,59 @@
+{
+    "title": "Aviation Radar & Flight Intelligence Input",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "region": {
+            "title": "Radar Coverage Region",
+            "type": "string",
+            "description": "Select geographical bounding box for live ADS-B flight transponder scanning.",
+            "default": "Western Europe & Mediterranean",
+            "enum": [
+                "North Africa & Morocco",
+                "Western Europe & Mediterranean",
+                "Middle East & Gulf Hubs",
+                "North America (East Coast)",
+                "East Asia & Japan"
+            ]
+        },
+        "maxFlights": {
+            "title": "Max Flights to Extract",
+            "type": "integer",
+            "description": "Maximum number of live flights to record in dataset.",
+            "default": 100,
+            "minimum": 10,
+            "maximum": 500
+        },
+        "searchCallsign": {
+            "title": "Filter by Specific Callsign / Airline Code",
+            "type": "string",
+            "description": "Optional search term for specific aircraft callsign (e.g. RAM, UAE, BAW, AFR, DLH).",
+            "default": ""
+        },
+        "airportIcaoForFids": {
+            "title": "Airport ICAO for FIDS Timetable",
+            "type": "string",
+            "description": "Airport code to extract departure/arrival FIDS boards (e.g. GMMN, OMDB, LFPG, EGLL, KJFK).",
+            "default": "GMMN"
+        },
+        "includeConflictZones": {
+            "title": "Include Conflict Airspace CZIB Bulletins",
+            "type": "boolean",
+            "description": "Extract active global war zones and aviation risk notices.",
+            "default": true
+        },
+        "includeMetarWeather": {
+            "title": "Include Aerodrome METAR Weather",
+            "type": "boolean",
+            "description": "Extract decoded METAR winds, visibility, ceiling, and crosswind runway hazards.",
+            "default": true
+        },
+        "apiKey": {
+            "title": "Apify API Token / Custom Key",
+            "type": "string",
+            "description": "Optional Apify API token or custom authentication key for MCP and programmatic triggers.",
+            "editor": "textfield"
+        }
+    },
+    "required": ["region"]
+}
