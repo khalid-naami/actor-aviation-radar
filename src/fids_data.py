@@ -142,3 +142,23 @@ class FIDSManager:
             "departures_df": pd.DataFrame(departures),
             "arrivals_df": pd.DataFrame(arrivals)
         }
+
+    @classmethod
+    def generate_fids_departures(cls, target_code: str) -> List[Dict[str, Any]]:
+        """Generate departure list directly for an ICAO or IATA code."""
+        from src.airports_data import get_airport_info
+        info = get_airport_info(target_code)
+        iata = info["iata"] if info else "CMN"
+        city = info["city"] if info else "Casablanca"
+        boards = cls.generate_fids_boards(iata, city)
+        return boards["departures_df"].to_dict(orient="records")
+
+    @classmethod
+    def generate_fids_arrivals(cls, target_code: str) -> List[Dict[str, Any]]:
+        """Generate arrival list directly for an ICAO or IATA code."""
+        from src.airports_data import get_airport_info
+        info = get_airport_info(target_code)
+        iata = info["iata"] if info else "CMN"
+        city = info["city"] if info else "Casablanca"
+        boards = cls.generate_fids_boards(iata, city)
+        return boards["arrivals_df"].to_dict(orient="records")
