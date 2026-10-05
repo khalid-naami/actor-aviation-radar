@@ -1,0 +1,56 @@
+{
+    "actorSpecification": 1,
+    "fields": {
+        "type": "object",
+        "properties": {
+            "type": {
+                "type": "string",
+                "title": "Record Type"
+            },
+            "callsign": {
+                "type": "string",
+                "title": "Flight Callsign"
+            },
+            "icao24": {
+                "type": "string",
+                "title": "ICAO 24-bit Transponder Address"
+            },
+            "origin_country": {
+                "type": "string",
+                "title": "Country of Registration"
+            },
+            "latitude": {
+                "type": "number",
+                "title": "Latitude"
+            },
+            "longitude": {
+                "type": "number",
+                "title": "Longitude"
+            },
+            "baro_altitude_m": {
+                "type": "number",
+                "title": "Barometric Altitude (m)"
+            },
+            "velocity_ms": {
+                "type": "number",
+                "title": "Ground Speed (m/s)"
+            },
+            "true_track": {
+                "type": "number",
+                "title": "Heading Track (°)"
+            },
+            "conflict_zone_risk": {
+                "type": "string",
+                "title": "Conflict Airspace Status"
+            },
+            "metar_observation": {
+                "type": "object",
+                "title": "Decoded METAR Weather"
+            },
+            "fids_board": {
+                "type": "object",
+                "title": "Airport FIDS Timetable"
+            }
+        }
+    }
+}
