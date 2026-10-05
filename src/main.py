@@ -72,12 +72,14 @@ async def main() -> None:
                 "callsign": flight.get("callsign"),
                 "icao24": flight.get("icao24"),
                 "country": flight.get("origin_country"),
+                "origin_country": flight.get("origin_country"),
                 "latitude": flight.get("latitude"),
                 "longitude": flight.get("longitude"),
                 "altitude_m": flight.get("baro_altitude"),
+                "baro_altitude_m": flight.get("baro_altitude"),
                 "velocity_ms": flight.get("velocity"),
                 "true_track": flight.get("true_track"),
-                "squawk": flight.get("squawk")
+                "squawk": str(flight.get("squawk")) if flight.get("squawk") is not None else None
             }
             dataset_items.append(item)
 
@@ -92,7 +94,12 @@ async def main() -> None:
             })
 
         if dataset_items:
-            await Actor.push_data(dataset_items)
+            try:
+                await Actor.push_data(dataset_items)
+            except Exception as push_err:
+                Actor.log.warning(f"Initial dataset push_data encountered validation issue: {push_err}. Retrying sanitized payload...")
+                sanitized = [{k: v for k, v in itm.items() if v is not None} for itm in dataset_items]
+                await Actor.push_data(sanitized)
 
         # Save executive summary in Key-Value store for Apify MCP & instant API tools
         summary_payload = {
