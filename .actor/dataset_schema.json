@@ -1,55 +1,107 @@
 {
     "actorSpecification": 1,
     "fields": {
+        "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
+        "additionalProperties": true,
         "properties": {
             "type": {
-                "type": "string",
+                "type": ["string", "null"],
                 "title": "Record Type"
             },
             "callsign": {
-                "type": "string",
+                "type": ["string", "null"],
                 "title": "Flight Callsign"
             },
             "icao24": {
-                "type": "string",
+                "type": ["string", "null"],
                 "title": "ICAO 24-bit Transponder Address"
             },
-            "origin_country": {
-                "type": "string",
+            "country": {
+                "type": ["string", "null"],
                 "title": "Country of Registration"
             },
+            "origin_country": {
+                "type": ["string", "null"],
+                "title": "Origin Country"
+            },
             "latitude": {
-                "type": "number",
+                "type": ["number", "null"],
                 "title": "Latitude"
             },
             "longitude": {
-                "type": "number",
+                "type": ["number", "null"],
                 "title": "Longitude"
             },
+            "altitude_m": {
+                "type": ["number", "null"],
+                "title": "Altitude (m)"
+            },
             "baro_altitude_m": {
-                "type": "number",
+                "type": ["number", "null"],
                 "title": "Barometric Altitude (m)"
             },
             "velocity_ms": {
-                "type": "number",
+                "type": ["number", "null"],
                 "title": "Ground Speed (m/s)"
             },
             "true_track": {
-                "type": "number",
+                "type": ["number", "null"],
                 "title": "Heading Track (°)"
             },
+            "squawk": {
+                "type": ["string", "number", "null"],
+                "title": "Squawk Code"
+            },
             "conflict_zone_risk": {
-                "type": "string",
+                "type": ["string", "null"],
                 "title": "Conflict Airspace Status"
             },
-            "metar_observation": {
-                "type": "object",
+            "metar": {
+                "type": ["object", "null"],
                 "title": "Decoded METAR Weather"
             },
-            "fids_board": {
-                "type": "object",
-                "title": "Airport FIDS Timetable"
+            "airport": {
+                "type": ["object", "null"],
+                "title": "Airport Details"
+            },
+            "departures_count": {
+                "type": ["integer", "null"],
+                "title": "FIDS Departures Count"
+            },
+            "arrivals_count": {
+                "type": ["integer", "null"],
+                "title": "FIDS Arrivals Count"
+            }
+        }
+    },
+    "views": {
+        "overview": {
+            "title": "Live Radar Aircraft",
+            "transformation": {
+                "fields": [
+                    "type",
+                    "callsign",
+                    "icao24",
+                    "country",
+                    "altitude_m",
+                    "velocity_ms",
+                    "true_track",
+                    "squawk"
+                ]
+            },
+            "display": {
+                "component": "table",
+                "properties": {
+                    "type": { "label": "Type", "format": "text" },
+                    "callsign": { "label": "Callsign", "format": "text" },
+                    "icao24": { "label": "ICAO24", "format": "text" },
+                    "country": { "label": "Country", "format": "text" },
+                    "altitude_m": { "label": "Altitude (m)", "format": "number" },
+                    "velocity_ms": { "label": "Speed (m/s)", "format": "number" },
+                    "true_track": { "label": "Heading (°)", "format": "number" },
+                    "squawk": { "label": "Squawk", "format": "text" }
+                }
             }
         }
     }
