@@ -1,0 +1,16 @@
+{
+    "actorSpecification": 1,
+    "name": "global-flight-radar-intelligence",
+    "title": "Global Flight Radar, Conflict Airspaces & Airport FIDS Boards",
+    "description": "Extract live ADS-B flight transponders from OpenSky Network, active conflict zones and war airspaces, METAR aviation weather, and airport timetables.",
+    "version": "1.0.0",
+    "meta": {
+        "templateId": "python-empty"
+    },
+    "dockerfile": "./Dockerfile",
+    "input": "./input_schema.json",
+    "storages": {
+        "dataset": "./dataset_schema.json"
+    },
+    "output": "./output_schema.json"
+}
