@@ -55,8 +55,11 @@
             "title": "Apify API Token / Custom Key",
             "type": "string",
             "description": "Optional Apify API token or custom authentication key for MCP and programmatic triggers.",
-            "editor": "textfield"
+            "editor": "textfield",
+            "isSecret": true
         }
     },
-    "required": ["region"]
+    "required": [
+        "region"
+    ]
 }
