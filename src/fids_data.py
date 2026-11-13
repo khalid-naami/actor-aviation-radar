@@ -45,7 +45,7 @@ class FIDSManager:
     @staticmethod
     def generate_fids_boards(airport_iata: str, airport_city: str) -> Dict[str, pd.DataFrame]:
         """Generate synchronized Departure and Arrival boards for the target airport."""
-        now = datetime.datetime.now()
+        now = datetime.datetime.now(datetime.timezone.utc)
         
         # Consistent seed per 5 minutes for stable display
         seed_val = int(now.timestamp() / 300) + sum(ord(c) for c in airport_iata)
