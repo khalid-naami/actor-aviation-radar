@@ -3,9 +3,8 @@
     "fields": {
         "$schema": "http://json-schema.org/draft-07/schema#",
         "type": "object",
-        "additionalProperties": true,
         "properties": {
-            "type": {
+            "record_type": {
                 "type": ["string", "null"],
                 "title": "Record Type"
             },
@@ -15,11 +14,7 @@
             },
             "icao24": {
                 "type": ["string", "null"],
-                "title": "ICAO 24-bit Transponder Address"
-            },
-            "country": {
-                "type": ["string", "null"],
-                "title": "Country of Registration"
+                "title": "ICAO24 Transponder Hex"
             },
             "origin_country": {
                 "type": ["string", "null"],
@@ -33,74 +28,184 @@
                 "type": ["number", "null"],
                 "title": "Longitude"
             },
-            "altitude_m": {
-                "type": ["number", "null"],
-                "title": "Altitude (m)"
-            },
             "baro_altitude_m": {
                 "type": ["number", "null"],
                 "title": "Barometric Altitude (m)"
             },
+            "altitude_ft": {
+                "type": ["number", "null"],
+                "title": "Barometric Altitude (ft)"
+            },
             "velocity_ms": {
                 "type": ["number", "null"],
-                "title": "Ground Speed (m/s)"
+                "title": "Ground Velocity (m/s)"
             },
-            "true_track": {
+            "speed_kts": {
                 "type": ["number", "null"],
-                "title": "Heading Track (°)"
+                "title": "Ground Speed (kts)"
+            },
+            "speed_kmh": {
+                "type": ["number", "null"],
+                "title": "Ground Speed (km/h)"
+            },
+            "true_track_deg": {
+                "type": ["number", "null"],
+                "title": "True Heading (deg)"
+            },
+            "heading_deg": {
+                "type": ["number", "null"],
+                "title": "Heading (deg)"
+            },
+            "vertical_rate_fpm": {
+                "type": ["number", "null"],
+                "title": "Vertical Rate (fpm)"
+            },
+            "on_ground": {
+                "type": ["boolean", "null"],
+                "title": "On Ground Status"
             },
             "squawk": {
-                "type": ["string", "number", "null"],
-                "title": "Squawk Code"
+                "type": ["string", "null"],
+                "title": "Transponder Squawk"
+            },
+            "emergency": {
+                "type": ["string", "null"],
+                "title": "Emergency Status"
+            },
+            "flight_phase": {
+                "type": ["string", "null"],
+                "title": "Flight Phase"
             },
             "conflict_zone_risk": {
                 "type": ["string", "null"],
-                "title": "Conflict Airspace Status"
+                "title": "Conflict Airspace Risk"
             },
-            "metar": {
-                "type": ["object", "null"],
-                "title": "Decoded METAR Weather"
+            "airport_icao": {
+                "type": ["string", "null"],
+                "title": "Airport ICAO"
             },
             "airport": {
                 "type": ["object", "null"],
-                "title": "Airport Details"
+                "title": "Airport Metadata",
+                "additionalProperties": true
             },
-            "departures_count": {
-                "type": ["integer", "null"],
-                "title": "FIDS Departures Count"
+            "metar": {
+                "type": ["object", "null"],
+                "title": "METAR Weather Report",
+                "additionalProperties": true
             },
-            "arrivals_count": {
-                "type": ["integer", "null"],
-                "title": "FIDS Arrivals Count"
+            "runway_crosswind": {
+                "type": ["object", "null"],
+                "title": "Runway Crosswind Analysis",
+                "additionalProperties": true
+            },
+            "passenger_guide": {
+                "type": ["object", "null"],
+                "title": "Terminal Passenger Guide",
+                "additionalProperties": true
+            },
+            "fids_departures": {
+                "type": ["array", "null"],
+                "title": "FIDS Departures",
+                "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                }
+            },
+            "fids_arrivals": {
+                "type": ["array", "null"],
+                "title": "FIDS Arrivals",
+                "items": {
+                    "type": "object",
+                    "additionalProperties": true
+                }
+            },
+            "zone_name": {
+                "type": ["string", "null"],
+                "title": "Conflict Zone Name"
+            },
+            "risk_level": {
+                "type": ["string", "null"],
+                "title": "Airspace Risk Level"
+            },
+            "countries_affected": {
+                "type": ["array", "null"],
+                "title": "Countries Affected",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "issuing_authority": {
+                "type": ["string", "null"],
+                "title": "Issuing Authority"
+            },
+            "altitude_restriction": {
+                "type": ["string", "null"],
+                "title": "Altitude Restriction"
+            },
+            "advisory_summary": {
+                "type": ["string", "null"],
+                "title": "NOTAM Advisory Summary"
             }
-        }
+        },
+        "additionalProperties": true,
+        "required": []
     },
     "views": {
         "overview": {
-            "title": "Live Radar Aircraft",
+            "title": "Overview",
             "transformation": {
                 "fields": [
-                    "type",
+                    "record_type",
                     "callsign",
                     "icao24",
-                    "country",
-                    "altitude_m",
+                    "origin_country",
+                    "latitude",
+                    "longitude",
+                    "baro_altitude_m",
                     "velocity_ms",
-                    "true_track",
-                    "squawk"
+                    "conflict_zone_risk"
                 ]
             },
             "display": {
                 "component": "table",
                 "properties": {
-                    "type": { "label": "Type", "format": "text" },
-                    "callsign": { "label": "Callsign", "format": "text" },
-                    "icao24": { "label": "ICAO24", "format": "text" },
-                    "country": { "label": "Country", "format": "text" },
-                    "altitude_m": { "label": "Altitude (m)", "format": "number" },
-                    "velocity_ms": { "label": "Speed (m/s)", "format": "number" },
-                    "true_track": { "label": "Heading (°)", "format": "number" },
-                    "squawk": { "label": "Squawk", "format": "text" }
+                    "record_type": {
+                        "label": "Record Type",
+                        "format": "text"
+                    },
+                    "callsign": {
+                        "label": "Flight Callsign",
+                        "format": "text"
+                    },
+                    "icao24": {
+                        "label": "ICAO24 Transponder Hex",
+                        "format": "text"
+                    },
+                    "origin_country": {
+                        "label": "Origin Country",
+                        "format": "text"
+                    },
+                    "latitude": {
+                        "label": "Latitude",
+                        "format": "number"
+                    },
+                    "longitude": {
+                        "label": "Longitude",
+                        "format": "number"
+                    },
+                    "baro_altitude_m": {
+                        "label": "Barometric Altitude (m)",
+                        "format": "number"
+                    },
+                    "velocity_ms": {
+                        "label": "Ground Velocity (m/s)",
+                        "format": "number"
+                    },
+                    "conflict_zone_risk": {
+                        "label": "Conflict Airspace Risk",
+                        "format": "text"
+                    }
                 }
             }
         }
